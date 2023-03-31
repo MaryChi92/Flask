@@ -1,6 +1,8 @@
 from flask import render_template, Blueprint
 from werkzeug.exceptions import NotFound
 
+# from blog.models import Article
+
 articles = Blueprint('articles', __name__, url_prefix='/articles', static_folder='../static')
 
 ARTICLES = {

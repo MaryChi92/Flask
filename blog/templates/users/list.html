@@ -5,16 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Users</h1>
-    <div>
-        <ul>
-            {% for user_id in users %}
-                <li>
-                    <a href="{{ url_for('users.details', user_id=user_id) }}">
-                        {{ users[user_id] }}
-                    </a>
-                </li>
+    <div class="row">
+        <div class="col">
+            <h1>Users</h1>
+            {% for user in users %}
+                <ul>
+                    <li><a href="{{ url_for('users.details', pk=user.id) }}">{{ user.username }}</a></li>
+                </ul>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 {% endblock %}
