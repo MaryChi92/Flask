@@ -385,4 +385,4 @@ $RECYCLE.BIN/
 *.db
 
 # Configuration
-.env
+#.env

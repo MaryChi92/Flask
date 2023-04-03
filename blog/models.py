@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    is_staff = db.Column(db.Boolean, default=False)
 
     # articles = relationship('Article', back_populates='user')
 

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12.7-alpine
+    privileged: true
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: blog
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  app:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/blog
+    ports:
+    - 8080:5000
+    command: bash -c "./wait-for-postgres.sh db && flask db upgrade && python3 wsgi.py"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
