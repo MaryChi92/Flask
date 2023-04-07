@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  User {{ user.id }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ user.username }}</h1>
+  <div>
+    <ul>
+        {% for article_id in articles %}
+          {% if user.id == article_id %}
+            <li>
+              <a href="{{ url_for('articles.details', article_id=article_id) }}">
+                {{ articles[article_id][0] }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <a href="{{ url_for('users.list') }}">Back to users list</a>
+  </div>
+{% endblock %}
