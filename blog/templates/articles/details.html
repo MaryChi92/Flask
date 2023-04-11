@@ -14,9 +14,19 @@
 
     <div class="row">
         <div class="col-6">
-            <div><small class="text-muted">Author: <a href="{{ url_for('users.details', pk=article.author.user.id) }}">{{ article.author.user.username }}</a></small></div>
+            <div><small class="text-muted">Author:
+                <a
+                    href="{{ url_for('users.details', pk=article.author.user.id) }}">{{ article.author.user.username }}
+                </a></small></div>
             <div><small class="text-muted">Created at: {{ article.created_at.strftime('%d-%m-%Y %H:%M') }}</small></div>
             <div><small class="text-muted">Updated at: {{ article.updated_at.strftime('%d-%m-%Y %H:%M') }}</small></div>
+        </div>
+        <div class="col-6">
+            {% for tag in article.tags %}
+                <a href="{{ url_for('articles.filter', tag_name=tag.name) }}">
+                    <span class="badge bg-primary">{{ tag.name }}</span>
+                </a>
+            {% endfor %}
         </div>
     </div>
   <div>
