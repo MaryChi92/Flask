@@ -5,6 +5,7 @@ from blog.extensions import db, login_manager, migrate, csrf
 from blog.models import User
 from blog.article import views as article_views
 from blog.auth import views as auth_views
+from blog.author import views as author_views
 from blog.home import views as home_views
 from blog.user import views as user_views
 
@@ -34,6 +35,7 @@ def register_extensions(app):
 
 def register_blueprints(app: Flask):
     app.register_blueprint(user_views.users, url_prefix='/users')
+    app.register_blueprint(author_views.authors, url_prefix='/authors')
     app.register_blueprint(article_views.articles, url_prefix='/articles')
     app.register_blueprint(auth_views.auth, url_prefix='/auth')
     app.register_blueprint(home_views.home, url_prefix='/home')
