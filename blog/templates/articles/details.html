@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Article {{ article_id[0] }}
+{{ article.title }}
 {% endblock %}
 
 {% block body %}
-  <h1>{{ article_name }}</h1>
-  <p>{{ article_text }}</p>
+  <div class="row">
+        <h1>{{ article.title }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><p>{{ article.body }}</p></div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div><small class="text-muted">Author: <a href="{{ url_for('users.details', pk=article.author.user.id) }}">{{ article.author.user.username }}</a></small></div>
+            <div><small class="text-muted">Created at: {{ article.created_at.strftime('%d-%m-%Y %H:%M') }}</small></div>
+            <div><small class="text-muted">Updated at: {{ article.updated_at.strftime('%d-%m-%Y %H:%M') }}</small></div>
+        </div>
+    </div>
   <div>
     <a href="{{ url_for('articles.list') }}">Back to articles list</a>
   </div>

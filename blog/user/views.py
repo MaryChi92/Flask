@@ -3,7 +3,7 @@ from flask_login import login_required
 from werkzeug.exceptions import NotFound
 
 from blog.article import views as article_views
-from blog.models import User
+from blog.models import User, Article
 
 users = Blueprint('users', __name__, url_prefix='/users', static_folder='../static')
 
@@ -18,7 +18,6 @@ def users_list():
 @login_required
 def user_details(pk: int):
     selected_user = User.query.filter_by(id=pk).one_or_none()
-    articles = article_views.ARTICLES
     if not selected_user:
         raise NotFound(f"User {pk} doesn't exist!")
-    return render_template('users/details.html', user=selected_user, articles=articles)
+    return render_template('users/details.html', user=selected_user)
