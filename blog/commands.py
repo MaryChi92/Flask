@@ -20,3 +20,14 @@ def create_init_user():
             User(username='Jensen', email='jensen@example.com', password=generate_password_hash('jensen2'))
         )
         db.session.commit()
+
+@click.command('create-init-tags')
+def create_init_tags():
+    from blog.models import Tag
+    from wsgi import app
+
+    with app.app_context():
+        tags = ('travel', 'restaurant', 'review', 'advice', 'lifestyle', 'hotel')
+        for tag in tags:
+            db.session.add(Tag(name=tag))
+        db.session.commit()
