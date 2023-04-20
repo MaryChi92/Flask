@@ -10,14 +10,14 @@
     {% for article in user.author.articles %}
         <ul>
             <li>
-              <a href="{{ url_for('articles.details', article_id=article.id) }}">
+              <a href="{{ url_for('articles.details', article_id=article.id) }}" style="text-decoration: none;">
                 {{ article.title }}
               </a>
             </li>
+        </ul>
     {% endfor %}
-    </ul>
   </div>
   <div>
-    <a href="{{ url_for('users.list') }}">Back to users list</a>
+    <a href="{{ url_for('users.list') }}" style="text-decoration: none;">Back to users list</a>
   </div>
 {% endblock %}

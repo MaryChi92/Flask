@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import logout_user, login_user, login_required, current_user
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import generate_password_hash
 
 from blog.extensions import db
 from blog.forms.user import UserRegisterForm, UserLoginForm
@@ -12,7 +12,7 @@ auth = Blueprint('auth', __name__, static_folder='../static')
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('user.profile', pk=current_user.id))
+        return redirect(url_for('users.details', pk=current_user.id))
 
     form = UserRegisterForm(request.form)
     errors = []
@@ -32,34 +32,36 @@ def register():
 
         login_user(_user)
 
+        return redirect(url_for('users.details', pk=_user.id))
+
     return render_template('auth/register.html', form=form, errors=errors)
 
 
 @auth.route('/login', methods=['GET'])
 def login():
-    form = UserLoginForm(request.form)
+    # form = UserLoginForm(request.form)
     if current_user.is_authenticated:
-        return redirect(url_for('user.profile', pk=current_user.id))
+        return redirect(url_for('users.details', pk=current_user.id))
 
-    return render_template('auth/login.html', form=form)
+    return render_template('auth/login.html', form=UserLoginForm(request.form))
 
 
 @auth.route('/login', methods=['POST'])
 def login_post():
     form = UserLoginForm(request.form)
-    errors = []
+    # errors = []
 
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
 
-        if not user or not check_password_hash(user.password, form.password.data):
-            errors.append('Check login credentials please!')
-            return render_template('auth/register.html', form=form)
+        if not user or not user.check_password(form.password.data):
+            flash('Check login credentials please!')
+            return redirect(url_for('.login'))
 
         login_user(user)
         return redirect(url_for('users.details', pk=user.id))
 
-    return render_template('auth/register.html', form=form, errors=errors)
+    return render_template('auth/login.html', form=form)
 
 
 @auth.route('/logout')
