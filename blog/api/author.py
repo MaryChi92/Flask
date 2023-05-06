@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask_pydantic import validate
+from blog.app import api
 
 from blog.models import Author, User
 from blog.schemas import QueryAuthorModel, ResponseAuthorModel, ResponseAuthorsModel

@@ -1,7 +1,7 @@
 from flask import Flask
 
 from blog import commands
-from blog.extensions import db, login_manager, migrate, csrf, admin
+from blog.extensions import db, login_manager, migrate, csrf, admin, api
 from blog.models import User
 from blog.article import views as article_views
 from blog.auth import views as auth_views
@@ -27,7 +27,8 @@ def register_extensions(app):
     migrate.init_app(app, db, compare_type=True)
     csrf.init_app(app)
     admin.init_app(app)
-    api.plugins
+
+    api.register(app)
 
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)

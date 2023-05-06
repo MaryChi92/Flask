@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import Optional
 
 from blog.schemas.author import ResponseAuthorModel
-from blog.schemas.tag import ResponseTagsModel
 
 
 class QueryArticleModel(BaseModel):
@@ -15,7 +14,6 @@ class ResponseArticleModel(BaseModel):
     title: str
     body: str
     author: ResponseAuthorModel
-    # tags: Optional[ResponseTagsModel]
 
     class Config:
         orm_mode = True
@@ -23,3 +21,8 @@ class ResponseArticleModel(BaseModel):
 
 class ResponseArticlesModel(BaseModel):
     articles: list[ResponseArticleModel]
+
+
+class FullResponseArticleModel(ResponseArticleModel):
+    from blog.schemas.tag import ResponseTagModel
+    tags: list[ResponseTagModel]
