@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_pydantic import validate
 
 from blog.models import Tag
-from blog.schemas import QueryTagModel, ResponseTagModel, ResponseTagsModel
+from blog.schemas import QueryTagModel, ResponseTagsModel, FullResponseTagModel
 
 
 api_tags = Blueprint('api_tags', __name__, url_prefix='/api/tags', static_folder='../static')
@@ -22,7 +22,8 @@ def get_tags():
 def get_tag(query: QueryTagModel):
     tag_id = query.id
     requested_tag = Tag.query.filter_by(id=tag_id).one_or_none()
-    return ResponseTagModel(
+    return FullResponseTagModel(
         id=tag_id,
         name=requested_tag.name,
+        articles=requested_tag.articles
     )
