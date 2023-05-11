@@ -3,6 +3,10 @@ from pydantic import BaseModel
 from blog.schemas.author import ResponseAuthorModel
 
 
+class Headers(BaseModel):
+    authorization: str
+
+
 class QueryTagModel(BaseModel):
     id: int
 

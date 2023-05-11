@@ -17,4 +17,4 @@ admin = Admin(
     template_mode='bootstrap4'
 )
 
-api = FlaskPydanticSpec('flask')
+api = FlaskPydanticSpec('flask', version='1.0')
